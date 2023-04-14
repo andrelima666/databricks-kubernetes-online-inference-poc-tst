@@ -43,7 +43,7 @@ jobs:
       - name: Download model artifact
         run: |
           # Get model artifact uri
-          MODEL_ARTIFACT_URI=$(curl --location --request GET '${DATABRICKS_HOST}/api/2.0/preview/mlflow/model-versions/get-download-uri' --header 'Authorization: Bearer ${DATABRICKS_TOKEN}' --header 'Content-Type: application/json' --data-raw '{"name": "${MODEL_NAME}", "version": "${MODEL_VERSION}"}' | jq .artifact_uri --raw-output)
+          MODEL_ARTIFACT_URI=$(curl --location --request GET ${DATABRICKS_HOST}/api/2.0/preview/mlflow/model-versions/get-download-uri --header "Authorization: Bearer ${DATABRICKS_TOKEN}" --header "Content-Type: application/json" --data-raw '{"name": "'"${MODEL_NAME}"'", "version": "'"${MODEL_VERSION}"'"}' | jq .artifact_uri --raw-output)
                                
           # Download model artifacts from databricks
           MODEL_ARTIFACT_PATH=$(mlflow artifacts download -u $MODEL_ARTIFACT_URI)
